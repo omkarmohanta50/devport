@@ -2,11 +2,15 @@
 import {createElement} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {FaGithub,FaLinkedin,FaEnvelope,FaFileAlt} from 'react-icons/fa';
+import {FaXTwitter} from 'react-icons/fa6';
 import {profile as p} from '../data/profile';
+import work from '../data/omkarmohanta09.json';
+import personal from '../data/omkarmohanta50.json';
 const contacts=[
+ {name:'Twitter',url:'https://x.com/Omkar_mohanta',icon:FaXTwitter,handle:'@Omkar_mohanta',description:'Omkar Mohanta on X',meta:'',kind:'twitter'},
  {name:'Résumé',url:'/resume.pdf',icon:FaFileAlt,handle:'Original résumé from Drive',description:'Omkar Mohanta · DevOps Engineer',meta:'PDF',kind:'resume'},
- {name:'Work GitHub',url:p.links[1][1],icon:FaGithub,handle:'@omkarmohanta09',description:'Deployment automation, release recovery, and tools for infrastructure teams.',meta:'VegaStack · Work contributions',kind:'github'},
- {name:'Personal GitHub',url:p.links[2][1],icon:FaGithub,handle:'@omkarmohanta50',description:'Cloud infrastructure, containers, automation, and application development.',meta:'Personal GitHub profile',kind:'github'},
+ {name:'Work GitHub',url:p.links[1][1],icon:FaGithub,handle:'@'+work.login,description:work.bio||'DevOps Engineer at VegaStack',meta:work.repos+' public repositories · '+work.followers+' followers',kind:'github'},
+ {name:'Personal GitHub',url:p.links[2][1],icon:FaGithub,handle:'@'+personal.login,description:personal.bio||'Cloud infrastructure and application development',meta:personal.repos+' public repositories · '+personal.followers+' followers',kind:'github'},
  {name:'LinkedIn',url:p.links[0][1],icon:FaLinkedin,handle:'DevOps Engineer',description:'VegaStack (PeerXP)',meta:'Cloud infrastructure · Release engineering · AI agents',kind:'linkedin'},
  {name:'Mail',url:'mailto:'+p.email,icon:FaEnvelope,handle:p.email,description:'Get in touch with Omkar.',meta:'',kind:'mail'},
 ];
@@ -14,5 +18,20 @@ const contacts=[
 <div class="links">
 {contacts.map((c,i)=><div class="contact-wrap"><a class="contact-pill" href={c.url} aria-describedby={'preview-'+i}><Fragment set:html={renderToStaticMarkup(createElement(c.icon,{'aria-hidden':true,size:14}))}/>{c.name}</a>
 <div class={'profile-preview '+c.kind} role="tooltip" id={'preview-'+i}>
-<div class="preview-banner"></div><div class="preview-body"><div class="preview-heading"><span class="preview-avatar" aria-hidden="true">OM</span><div><strong>Omkar Mohanta</strong><small>{c.handle}</small></div></div><p>{c.description}</p><small>{c.meta}</small></div></div></div>)}
+<div class="preview-body"><div class="preview-heading"><img class="preview-photo" src={c.kind==='github'?'/images/'+c.handle.slice(1)+'.jpg':'/images/avatar.jpg'} alt="Omkar Mohanta" width="56" height="56"/><div><strong>Omkar Mohanta</strong><small>{c.handle}</small></div></div><p>{c.description}</p><small>{c.meta}</small></div></div></div>)}
 </div>
+<script>
+document.querySelectorAll<HTMLElement>('.contact-wrap').forEach(wrapper=>{
+ const card=wrapper.querySelector<HTMLElement>('.profile-preview')!;
+ const link=wrapper.querySelector<HTMLAnchorElement>('a')!;
+ function place(x:number,y:number){
+  const width=card.getBoundingClientRect().width;
+  const height=card.getBoundingClientRect().height;
+  card.style.left=Math.max(10,Math.min(x+14,innerWidth-width-10))+'px';
+  card.style.top=(y+18+height>innerHeight?Math.max(10,y-height-12):y+18)+'px';
+ }
+ wrapper.addEventListener('pointerenter',event=>place(event.clientX,event.clientY));
+ wrapper.addEventListener('pointermove',event=>place(event.clientX,event.clientY));
+ link.addEventListener('focus',()=>{const r=link.getBoundingClientRect();place(r.left,r.bottom)});
+});
+</script>

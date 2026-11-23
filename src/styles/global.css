@@ -138,3 +138,12 @@ main section:not(.identity)::before{
  background-size:10px 10px;
  box-shadow:none;
 }
+.contact-wrap .profile-preview{position:fixed;left:0;top:0;bottom:auto;width:340px;max-width:calc(100vw - 20px);transform:translateY(5px);border-radius:16px;pointer-events:none}
+.contact-wrap:hover .profile-preview,.contact-wrap:focus-within .profile-preview{transform:none;pointer-events:none}
+.preview-photo{width:56px;height:56px;object-fit:cover;border-radius:50%;flex-shrink:0}
+.preview-body{padding:12px 16px}.preview-heading{gap:12px}
+.preview-body p{font-size:12px;margin:12px 0 8px}
+.profile-preview.mail,.profile-preview.resume{width:max-content;max-width:calc(100vw - 20px)}
+.profile-preview.mail .preview-heading,.profile-preview.resume .preview-heading{display:none}
+@media(max-width:540px){.contact-wrap .profile-preview{left:0;bottom:auto;transform:translateY(5px)}.contact-wrap:hover .profile-preview,.contact-wrap:focus-within .profile-preview{transform:none}}
+.contact-wrap .profile-preview.linkedin{height:auto;font:14px/1.4 "Geist Variable",sans-serif;background:var(--panel);color:var(--fg);display:block}
