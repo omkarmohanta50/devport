@@ -3,14 +3,14 @@ import Shell from '../layouts/Shell.astro';
 import Connect from '../components/Connect.astro';
 
 import Activity from '../components/Activity.astro';
-import { Eye, Contrast, Terminal, BriefcaseBusiness, GraduationCap, BookOpen, Award, ChevronDown } from '@lucide/astro';
+import { Contrast, Terminal, BriefcaseBusiness, GraduationCap, BookOpen, Award, ChevronDown } from '@lucide/astro';
 import {profile as p} from '../data/profile';
 ---
 <Shell>
 <div class="banner" aria-hidden="true"></div>
 <section class="identity">
 <button class="avatar" id="avatar" aria-pressed="false" aria-label="Toggle avatar"><span class="alternate"><Terminal size={52}/></span><img class="profile-avatar" src="/images/avatar.jpg" width="116" height="116" alt="Illustrated profile portrait of Omkar Mohanta" fetchpriority="high"/></button>
-<span class="views"><Eye size={14}/><span id="count" title="Unique browsers" aria-label="Unique browsers">—</span></span>
+
 <div class="identity-copy"><button class="profile-symbol" id="avatar-switch" aria-label="Toggle avatar" title="Toggle avatar" aria-pressed="false"><Contrast size={14}/></button><h1>{p.name}</h1><p class="rotator"><span id="role">{p.role}</span></p><small>VegaStack (PeerXP)</small></div></section>
 <section><h2>About</h2><ul class="about">
 <li>I'm a DevOps engineer at VegaStack. I work across cloud infrastructure, deployment automation, and the tools people use to operate services.</li>
@@ -44,26 +44,6 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches)setInterval(()=>{
  role.textContent=titles[current];
  role.animate([{transform:'translateY(80%)',opacity:0},{transform:'translateY(0)',opacity:1}],{duration:300,easing:'ease-out'});
 },3200);
-async function showViews(){
- const count=document.querySelector<HTMLElement>('#count')!;
- try{
-  const response=await fetch('/api/views',{method:'POST'});
-  if(!response.ok)throw new Error();
-  count.textContent=Number((await response.json()).views).toLocaleString();
- }catch{
-  count.textContent='—';
-  count.title='Visitor count unavailable';
- }
-}
-showViews();
-async function refreshCount(){
- try{
-  const response=await fetch('/api/views',{cache:'no-store'});
-  if(response.ok)document.querySelector('#count')!.textContent=Number((await response.json()).views).toLocaleString();
- }catch{}
-}
-window.addEventListener('focus',refreshCount);
-setInterval(()=>{if(!document.hidden)refreshCount()},15000);
 </script></Shell>
 
 
