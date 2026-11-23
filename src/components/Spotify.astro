@@ -1,0 +1,25 @@
+---
+import {Disc3} from '@lucide/astro';
+---
+<div class="spotify">
+  <div class="album"><Disc3 size={32}/><img hidden alt="" width="52" height="52"/></div>
+  <div class="track"><small>Last played</small><strong>Spotify</strong><span>Listening history unavailable</span></div>
+  <svg class="spotify-logo" viewBox="0 0 24 24" fill="currentColor" aria-label="Spotify"><circle cx="12" cy="12" r="11"/><g fill="none" stroke="var(--panel)" stroke-width="1.6" stroke-linecap="round"><path d="M5 9q7-3 14 1M6 12q6-2 12 1M7 15q5-1.5 9 1"/></g></svg>
+</div>
+<script>
+async function loadTrack(){
+  const card=document.querySelector<HTMLElement>('.spotify');
+  if(!card)return;
+  const response=await fetch('/api/spotify');
+  if(!response.ok)return;
+  const track=await response.json();
+  if(!track.name)return;
+  const link=document.createElement('a');
+  link.href=track.url;link.textContent=track.name;
+  card.querySelector('strong')!.replaceChildren(link);
+  card.querySelector('.track span')!.textContent=track.artist;
+  const img=card.querySelector('img')!;
+  if(track.image){img.src=track.image;img.hidden=false;}
+}
+loadTrack().catch(()=>{});
+</script>

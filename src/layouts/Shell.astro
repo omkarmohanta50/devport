@@ -1,0 +1,102 @@
+---
+const {title='DevOps Engineer'}=Astro.props;
+import '@fontsource-variable/geist/index.css';
+import '../styles/global.css';
+import { Search, Moon, Sun, ChevronDown, X, House, Rss, Activity, FileText, Mail, Contrast, ArrowUp, CornerDownLeft } from '@lucide/astro';
+import { profile as p } from '../data/profile';
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+---
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/>
+<script is:inline>
+if(location.hostname==='127.0.0.1' && location.port==='4322'){
+ const current=new URL(location.href);current.port='4323';location.replace(current.href);
+}
+</script><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Omkar Mohanta — {title}</title><meta name="description" content={p.intro}/>
+<meta property="og:title" content="Omkar Mohanta — DevOps Engineer"/><meta property="og:description" content={p.intro}/><meta property="og:type" content="website"/>
+<meta property="og:image" content={canonical ? new URL('/share.png',canonical).href : '/share.png'}/><meta name="twitter:card" content="summary_large_image"/>
+{canonical && <><link rel="canonical" href={canonical}/><meta property="og:url" content={canonical}/></>}
+<link rel="icon" href="/om.svg" type="image/svg+xml"/>
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<header class="band"><nav class="column"><a class="logo" href="/" aria-label="Home">OM</a><a href="/">Home</a><a href="/#experience">Experience</a>
+<details class="more"><summary>More <ChevronDown size={12}/></summary><div><a href="/blog/">Blog</a><a href="/activity/">Activity</a><a href="/#connect">Connect</a><a href="/#education">Education</a><a href="/resume.pdf">Résumé</a></div></details>
+<button id="find" aria-label="Search this profile"><Search size={14}/><kbd>Ctrl K</kbd></button><button id="theme" aria-label="Switch color theme"><Moon size={16} class="moon"/><Sun size={16} class="sun"/></button></nav></header>
+<main class="column" id="main"><slot/></main>
+<footer class="column">Omkar Mohanta</footer>
+<dialog id="palette" aria-label="Command Palette">
+<div class="command-input"><Search size={17}/><input id="query" type="text" role="combobox" aria-expanded="true" aria-controls="commands" aria-autocomplete="list" placeholder="Type a command or search..." autocomplete="off"/><button id="close-palette" aria-label="Close"><X size={16}/></button></div>
+<div class="command-scroll" id="commands" role="listbox" aria-label="Suggestions">
+<div class="command-group" role="group" aria-label="Navigation"><p>Navigation</p>
+{[[House,'Home','/'],[Rss,'Blogs','/blog/'],[Activity,'Activity','/activity/'],[FileText,'Résumé','/resume.pdf'],[Mail,'Connect','/#connect']].map(row=>{const [Icon,label,url]=row as [typeof House,string,string];return <a role="option" aria-selected="false" href={url}><Icon size={16}/><span>{label}</span></a>})}</div>
+<div class="command-group" role="group" aria-label="Feature"><p>Feature</p>
+<button role="option" aria-selected="false" data-action="theme"><Moon size={16}/><span>Toggle theme</span><kbd>D</kbd></button>
+<button role="option" aria-selected="false" data-action="avatar"><Contrast size={16}/><span>Toggle avatar</span><kbd>P</kbd></button>
+<button role="option" aria-selected="false" data-action="top"><ArrowUp size={16}/><span>Scroll to top</span><kbd>Shift ↑</kbd></button>
+<button role="option" aria-selected="false" data-action="close"><X size={16}/><span>Close command palette</span><kbd>Esc</kbd></button></div>
+<p class="no-results" hidden>No results found.</p></div>
+<div class="command-footer"><span class="command-monogram">OM</span><span>Go to Page <kbd><CornerDownLeft size={12}/></kbd></span><span>Exit <kbd>Esc</kbd></span></div>
+</dialog>
+<script>
+const palette=document.querySelector('dialog')!;
+const query=document.querySelector<HTMLInputElement>('#query')!;
+const options=Array.from(palette.querySelectorAll<HTMLElement>('[role="option"]'));
+const groups=Array.from(palette.querySelectorAll<HTMLElement>('.command-group'));
+let selected=0;
+function visibleOptions(){return options.filter(option=>!option.hidden)}
+function select(index:number){
+ const visible=visibleOptions();
+ selected=visible.length?(index+visible.length)%visible.length:0;
+ options.forEach(option=>option.setAttribute('aria-selected','false'));
+ query.removeAttribute('aria-activedescendant');
+ if(visible[selected]){
+  visible[selected].setAttribute('aria-selected','true');
+  query.setAttribute('aria-activedescendant',visible[selected].id);
+  visible[selected].scrollIntoView({block:'nearest'});
+ }
+}
+function filter(){
+ options.forEach(option=>option.hidden=!option.textContent?.toLowerCase().includes(query.value.toLowerCase()));
+ groups.forEach(group=>group.hidden=!Array.from(group.querySelectorAll<HTMLElement>('[role="option"]')).some(option=>!option.hidden));
+ palette.querySelector<HTMLElement>('.no-results')!.hidden=visibleOptions().length>0;
+ select(0);
+}
+function openSearch(){query.value='';palette.showModal();filter();query.focus()}
+options.forEach((option,index)=>{
+ option.id='command-'+index;
+ option.addEventListener('pointermove',()=>{selected=visibleOptions().indexOf(option);select(selected)});
+ option.addEventListener('click',()=>{
+  const action=option.dataset.action;
+  palette.close();
+  if(action==='theme')document.querySelector<HTMLButtonElement>('#theme')?.click();
+  if(action==='avatar'){
+   const avatar=document.querySelector<HTMLButtonElement>('#avatar');
+   if(avatar)avatar.click();
+   else {localStorage.setItem('avatar',localStorage.getItem('avatar')==='alternate'?'initials':'alternate');location.href='/'}
+  }
+  if(action==='top')window.scrollTo({top:0});
+ });
+});
+document.querySelector('#find')?.addEventListener('click',openSearch);
+document.querySelector('#close-palette')?.addEventListener('click',()=>palette.close());
+palette.addEventListener('click',event=>{if(event.target===palette){const r=palette.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)palette.close()}});
+document.addEventListener('keydown',e=>{
+ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();if(palette.open)palette.close();else openSearch()}
+ if(!palette.open)return;
+ if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();select(selected+(e.key==='ArrowDown'?1:-1))}
+ if(e.key==='Enter'&&document.activeElement===query){e.preventDefault();visibleOptions()[selected]?.click()}
+});
+query.addEventListener('input',filter);
+const root=document.documentElement;
+if(localStorage.getItem('theme')==='light')root.classList.add('light');
+document.querySelector('#theme')?.addEventListener('click',event=>{
+  const change=()=>{root.classList.toggle('light');localStorage.setItem('theme',root.classList.contains('light')?'light':'dark')};
+  if(!document.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches){change();return}
+  const bounds=(event.currentTarget as HTMLElement).getBoundingClientRect();
+  const x=bounds.left+bounds.width/2,y=bounds.top+bounds.height/2;
+  const transition=document.startViewTransition(change);
+  transition.ready.then(()=>root.animate({clipPath:['circle(0 at '+x+'px '+y+'px)','circle('+Math.hypot(innerWidth,innerHeight)+'px at '+x+'px '+y+'px)']},{duration:420,pseudoElement:'::view-transition-new(root)',easing:'ease-out'}));
+});
+</script></body></html>

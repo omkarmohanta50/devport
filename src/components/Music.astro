@@ -1,0 +1,26 @@
+---
+import {Disc3} from '@lucide/astro';
+---
+<div class="music-card">
+  <div class="album"><Disc3 size={32}/><img hidden alt="" width="52" height="52"/></div>
+  <div class="track"><small>Last played on YouTube Music</small><strong>YouTube Music</strong><span>Listening history unavailable</span></div>
+  <svg class="music-logo" viewBox="0 0 24 24" aria-label="YouTube Music"><circle cx="12" cy="12" r="11" fill="#ff0033"/><circle cx="12" cy="12" r="7" fill="none" stroke="white"/><path d="m10 8 6 4-6 4z" fill="white"/></svg>
+</div>
+<script>
+async function loadTrack(){
+  const card=document.querySelector<HTMLElement>('.music-card');
+  if(!card)return;
+  const response=await fetch('/api/music');
+  if(!response.ok)return;
+  const track=await response.json();
+  if(!track.name)return;
+  const link=document.createElement('a');
+  link.href=track.url;link.textContent=track.name;
+  card.querySelector('strong')!.replaceChildren(link);
+  card.querySelector('.track span')!.textContent=track.artist;
+  const img=card.querySelector('img')!;
+  if(track.image){img.src=track.image;img.hidden=false;}
+}
+loadTrack().catch(()=>{});
+</script>
+

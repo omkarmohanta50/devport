@@ -1,0 +1,7 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import {posts} from '../../data/posts';
+export function getStaticPaths(){return [undefined,...posts.map(p=>p.slug)].map(slug=>({params:{slug}}))}
+const post=posts.find(item=>item.slug===Astro.params.slug);
+---
+<Shell title={post?.title||'Blog'}><div class="journal"><aside><a href="/blog/">All posts</a>{posts.map(p=><a aria-current={post===p?'page':undefined} href={'/blog/'+p.slug+'/'}>{p.title}</a>)}</aside><article><h1>{post?.title||'Blog'}</h1>{post?<><small>{post.topic}</small>{post.paragraphs.map(text=><p>{text}</p>)}</>:posts.map(p=><a class="post" href={'/blog/'+p.slug+'/'}><small>{p.topic}</small><h3>{p.title}</h3></a>)}</article></div></Shell>

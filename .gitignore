@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+reference-command.png

@@ -1,0 +1,13 @@
+---
+import {createElement, cloneElement} from 'react';
+import {renderToStaticMarkup} from 'react-dom/server';
+import {ActivityCalendar} from 'react-activity-calendar';
+import data from '../data/contributions.json';
+const html=renderToStaticMarkup(createElement(ActivityCalendar,{
+  data,blockSize:10,blockMargin:3,blockRadius:2,fontSize:10,
+  showWeekdayLabels:['mon','wed','fri'],colorScheme:'dark',
+  labels:{totalCount:'{{count}} contributions in {{year}}'},
+  renderBlock:(block,activity)=>cloneElement(block,{},createElement('title',null,activity.date+' · '+activity.count+' contributions')),
+}));
+---
+<div class="github-map"><a href="https://github.com/omkarmohanta09">@omkarmohanta09</a><div class="map-scroll" set:html={html}></div></div>
