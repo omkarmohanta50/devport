@@ -1,11 +1,11 @@
 ---
 import Shell from '../layouts/Shell.astro';
 import Cover from '../components/Cover.astro';
-import {Film, Tv, Sparkles} from '@lucide/astro';
+import {Clapperboard} from '@lucide/astro';
 const groups=[
- {title:'Movies',icon:Film,items:[['The Shawshank Redemption','shawshank']]},
- {title:'Series',icon:Tv,items:[['Dark','dark'],['Breaking Bad','breaking-bad'],['Stranger Things','stranger-things']]},
- {title:'Anime',icon:Sparkles,items:[['Vinland Saga','vinland-saga']]}
+ {title:'Movies',icon:Clapperboard,items:[['The Shawshank Redemption','shawshank']]},
+ {title:'Series',icon:null,items:[['Dark','dark'],['Breaking Bad','breaking-bad'],['Stranger Things','stranger-things']]},
+ {title:'Anime',icon:null,items:[['Vinland Saga','vinland-saga']]}
 ];
 ---
-<Shell title="Favourites"><div class="gallery-intro"><h1>Favourites</h1></div>{groups.map(({title,icon:Icon,items})=><section class="media-section"><h2><Icon size={18}/>{title}</h2><div class="cover-grid">{items.map(([name,image])=><Cover title={name} image={'/images/'+image+'.jpg'}/>)}</div></section>)}</Shell>
+<Shell title="Favourites"><div class="gallery-intro"><h1>Favourites</h1></div>{groups.map(({title,icon:Icon,items})=><section class="media-section"><h2>{Icon?<Icon size={16}/>:<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m17 2-5 5-5-5"/><rect width="20" height="15" x="2" y="7" rx="2"/></svg>}{title}</h2><div class="cover-grid">{items.map(([name,image])=><Cover title={name} image={'/images/'+image+'.jpg'}/>)}</div></section>)}</Shell>
