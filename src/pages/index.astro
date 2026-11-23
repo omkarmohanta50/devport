@@ -4,13 +4,13 @@ import Connect from '../components/Connect.astro';
 import Education from '../components/Education.astro';
 
 import Activity from '../components/Activity.astro';
-import { Contrast, Terminal, BriefcaseBusiness, Award } from '@lucide/astro';
+import { Contrast, BriefcaseBusiness, Award } from '@lucide/astro';
 import {profile as p} from '../data/profile';
 ---
 <Shell>
 <div class="banner" aria-hidden="true"></div>
 <section class="identity">
-<button class="avatar" id="avatar" aria-pressed="false" aria-label="Toggle avatar"><span class="alternate"><Terminal size={52}/></span><img class="profile-avatar" src="/images/avatar.jpg" width="116" height="116" alt="Illustrated profile portrait of Omkar Mohanta" fetchpriority="high"/></button>
+<button class="avatar" id="avatar" aria-pressed="false" aria-label="Toggle avatar"><span class="alternate"><img src="/images/avatar-alternate.jpg" width="116" height="116" alt="Color illustrated portrait of Omkar Mohanta"/></span><img class="profile-avatar" src="/images/avatar.jpg" width="116" height="116" alt="Illustrated profile portrait of Omkar Mohanta" fetchpriority="high"/></button>
 
 <div class="identity-copy"><button class="profile-symbol" id="avatar-switch" aria-label="Toggle avatar" title="Toggle avatar" aria-pressed="false"><Contrast size={14}/></button><h1>{p.name}</h1><p class="rotator"><span id="role">{p.role}</span></p><small>VegaStack (PeerXP)</small></div></section>
 <section><h2>About</h2><ul class="about">
