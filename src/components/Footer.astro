@@ -1,0 +1,20 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="footer-frame column">
+    <div class="footer-row">
+      <p><span>© {year} Omkar Mohanta</span><span>Built with care. Always improving.</span></p>
+    </div>
+    <div class="footer-dots" aria-hidden="true"></div>
+  </div>
+</footer>
+<style>
+.site-footer{padding:0 8px;overflow:hidden;color:var(--muted)}
+.footer-frame{position:relative}
+.footer-row{position:relative;display:flex;align-items:center;min-height:82px;padding:2px 16px 0;border-block:1px solid var(--rule)}
+.footer-row::before,.footer-row::after{content:"+";position:absolute;bottom:-7px;font:16px/12px monospace;color:var(--muted)}
+.footer-row::before{left:-6px}.footer-row::after{right:-6px}
+.footer-row p{display:flex;flex-direction:column;margin:24px 0 0;font:400 12px/12px PixelSquare,monospace}
+.footer-dots{height:150px;background:radial-gradient(var(--muted) .7px,transparent .9px) 17px 19px/10px 10px;mask-image:linear-gradient(transparent 8%,black 20%,black 80%,transparent 95%);opacity:.45;border-bottom:1px solid var(--rule)}
+</style>

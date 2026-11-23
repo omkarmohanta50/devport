@@ -1,9 +1,10 @@
 ---
 import Shell from '../layouts/Shell.astro';
 import Connect from '../components/Connect.astro';
+import Education from '../components/Education.astro';
 
 import Activity from '../components/Activity.astro';
-import { Contrast, Terminal, BriefcaseBusiness, GraduationCap, BookOpen, Award, ChevronDown } from '@lucide/astro';
+import { Contrast, Terminal, BriefcaseBusiness, Award } from '@lucide/astro';
 import {profile as p} from '../data/profile';
 ---
 <Shell>
@@ -21,13 +22,10 @@ import {profile as p} from '../data/profile';
 <li>My application development background includes Java, Kotlin, and Firebase. It helps me understand the software on both sides of a deployment.</li>
 </ul></section><section id="connect"><h2>Connect</h2><Connect/></section>
 <section><h2>GitHub Activity</h2><Activity/><a class="activity-link" href="/activity/">View activity</a></section>
-<section id="experience"><h2>Experience</h2><div class="entry"><span class="company"><BriefcaseBusiness size={20}/></span><div><h3>VegaStack (PeerXP)</h3><details><summary>DevOps</summary><p>{p.work}</p></details><div class="chips">{['AWS','Terraform','Kubernetes','Docker','GitHub Actions'].map(t=><span>{t}</span>)}</div></div></div></section>
+<section id="experience"><h2>Experience</h2><div class="entry"><span class="company"><BriefcaseBusiness size={20}/></span><div><h3>VegaStack (PeerXP)</h3><details><summary>DevOps</summary><ul class="experience-highlights">{p.experienceHighlights.map(point=><li>{point}</li>)}</ul></details><div class="chips">{['AWS','Terraform','Kubernetes','Docker','GitHub Actions'].map(t=><span>{t}</span>)}</div></div></div></section>
 <section id="expertise"><h2>Expertise</h2>{p.expertise.map(([title,desc,tech])=><article class="entry-detail"><h3>{title}</h3><p>{desc}</p><small>{tech}</small></article>)}</section>
 <section id="education"><h2>Education</h2>
-{[
-  [GraduationCap,'Biju Patnaik University of Technology','B.Tech · Computer Science and Engineering','2021–2025','Odisha, India · CGPA 7.9/10'],
-  [BookOpen,'College of Basic Science & Humanities','Intermediate Science','2019–2021','Odisha, India · 89%']
-].map(row=>{const [Icon,title,degree,dates,detail]=row as [typeof GraduationCap,string,string,string,string];return <details class="school"><summary><span class="company"><Icon size={22}/></span><span><strong>{title}</strong><small>{degree}</small></span><time>{dates}</time><ChevronDown size={16} class="chevron"/></summary><p>{detail}</p></details>})}</section>
+<Education/></section>
 <section id="credentials"><h2>Credentials</h2>{p.background.slice(2).map(([title,,issuer,date])=><div class="entry"><Award size={18}/><div><h3>{title}</h3><p>{issuer}</p></div><small>{date}</small></div>)}</section><script>
 const avatar=document.querySelector<HTMLButtonElement>('#avatar')!;
 avatar.setAttribute('aria-pressed',String(localStorage.getItem('avatar')==='alternate'));
