@@ -7,12 +7,12 @@ import {profile as p} from '../data/profile';
 import work from '../data/omkarmohanta09.json';
 import personal from '../data/omkarmohanta50.json';
 const contacts=[
- {name:'Twitter',url:'https://x.com/Omkar_mohanta',icon:FaXTwitter,handle:'@Omkar_mohanta',description:'Omkar Mohanta on X',meta:'',kind:'twitter'},
- {name:'Résumé',url:'/resume.pdf',icon:FaFileAlt,handle:'Original résumé from Drive',description:'Omkar Mohanta · DevOps Engineer',meta:'PDF',kind:'resume'},
  {name:'Work GitHub',url:p.links[1][1],icon:FaGithub,handle:'@'+work.login,description:work.bio||'DevOps Engineer at VegaStack',meta:work.repos+' public repositories · '+work.followers+' followers',kind:'github'},
  {name:'Personal GitHub',url:p.links[2][1],icon:FaGithub,handle:'@'+personal.login,description:personal.bio||'Cloud infrastructure and application development',meta:personal.repos+' public repositories · '+personal.followers+' followers',kind:'github'},
+ {name:'Twitter',url:'https://x.com/Omkar_mohanta',icon:FaXTwitter,handle:'@Omkar_mohanta',description:'Omkar Mohanta on X',meta:'',kind:'twitter'},
  {name:'LinkedIn',url:p.links[0][1],icon:FaLinkedin,handle:'DevOps Engineer',description:'VegaStack (PeerXP)',meta:'Cloud infrastructure · Release engineering · AI agents',kind:'linkedin'},
  {name:'Mail',url:'mailto:'+p.email,icon:FaEnvelope,handle:p.email,description:'Get in touch with Omkar.',meta:'',kind:'mail'},
+ {name:'Résumé',url:'/resume.pdf',icon:FaFileAlt,handle:'Original résumé from Drive',description:'Omkar Mohanta · DevOps Engineer',meta:'PDF',kind:'resume'},
 ];
 ---
 <div class="links">
