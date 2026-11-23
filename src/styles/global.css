@@ -149,3 +149,4 @@ main section:not(.identity)::before{
 .contact-wrap .profile-preview.linkedin{height:auto;font:14px/1.4 "Geist Variable",sans-serif;background:var(--panel);color:var(--fg);display:block}
 .profile-screenshot{display:block;width:100%;height:auto}
 .contact-wrap .profile-preview.linkedin{width:300px;border-radius:12px}
+.contact-wrap .profile-preview.twitter{width:300px;border-radius:12px}

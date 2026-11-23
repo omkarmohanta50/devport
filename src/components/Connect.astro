@@ -18,7 +18,7 @@ const contacts=[
 <div class="links">
 {contacts.map((c,i)=><div class="contact-wrap"><a class="contact-pill" href={c.url} aria-describedby={'preview-'+i}><Fragment set:html={renderToStaticMarkup(createElement(c.icon,{'aria-hidden':true,size:14}))}/>{c.name}</a>
 <div class={'profile-preview '+c.kind} role="tooltip" id={'preview-'+i}>
-{c.kind==='linkedin'?<img class="profile-screenshot" src="/images/linkedin-preview.png" alt="Omkar Mohanta’s LinkedIn profile, DevOps Associate at VegaStack" width="1744" height="902"/>:<div class="preview-body"><div class="preview-heading"><img class="preview-photo" src={c.kind==='github'?'/images/'+c.handle.slice(1)+'.jpg':'/images/avatar.jpg'} alt="Omkar Mohanta" width="56" height="56"/><div><strong>Omkar Mohanta</strong><small>{c.handle}</small></div></div><p>{c.description}</p><small>{c.meta}</small></div>}</div></div>)}
+{c.kind==='twitter'?<img class="profile-screenshot" src="/images/twitter-preview.png" alt="Omkar Mohanta’s Twitter profile" width="1388" height="1127"/>:c.kind==='linkedin'?<img class="profile-screenshot" src="/images/linkedin-preview.png" alt="Omkar Mohanta’s LinkedIn profile, DevOps Associate at VegaStack" width="1744" height="902"/>:<div class="preview-body"><div class="preview-heading"><img class="preview-photo" src={c.kind==='github'?'/images/'+c.handle.slice(1)+'.jpg':'/images/avatar.jpg'} alt="Omkar Mohanta" width="56" height="56"/><div><strong>Omkar Mohanta</strong><small>{c.handle}</small></div></div><p>{c.description}</p><small>{c.meta}</small></div>}</div></div>)}
 </div>
 <script>
 document.querySelectorAll<HTMLElement>('.contact-wrap').forEach(wrapper=>{
