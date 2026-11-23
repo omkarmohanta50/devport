@@ -1,0 +1,57 @@
+---
+import { GraduationCap } from '@lucide/astro';
+const schools = [
+  { name: 'Biju Patnaik University of Technology', degree: 'Bachelor of Technology', subject: 'Computer Science and Engineering', start: '2021', end: '2025', detail: 'Odisha, India · CGPA 7.9/10' },
+  { name: 'College of Basic Science & Humanities', degree: 'Intermediate Science', subject: '', start: '2019', end: '2021', detail: 'Odisha, India · 89%' }
+];
+---
+<div class="education-list">
+{schools.map((school, index)=><article class="education-entry">
+  <div class="institution"><span class="institution-dot" aria-hidden="true"><span/></span><h3>{school.name}</h3></div>
+  <button class="education-trigger" aria-expanded="false" aria-controls={`education-detail-${index}`}>
+    <div class="qualification"><span class="degree-icon" aria-hidden="true"><GraduationCap size={16} stroke-width={2}/></span><h4>{school.degree}{school.subject && <span> · {school.subject}</span>}</h4><svg class="education-toggle" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="expand-icon" d="M7 15L12 20L17 15M7 9L12 4L17 9"/><path class="collapse-icon" d="M7 20L12 15L17 20M7 4L12 9L17 4"/></svg></div>
+    <div class="education-dates"><time>{school.start}</time><span>—</span><time>{school.end}</time></div>
+  </button>
+  <div class="education-content" id={`education-detail-${index}`} hidden><p>{school.detail}</p></div>
+</article>)}
+</div>
+<script>
+document.querySelectorAll<HTMLButtonElement>('.education-trigger').forEach(button=>{
+  const content=document.getElementById(button.getAttribute('aria-controls')!)!;
+  let animation: Animation | undefined;
+  button.addEventListener('click',()=>{
+    const open=button.getAttribute('aria-expanded')!=='true';
+    const height=content.hidden?0:content.getBoundingClientRect().height;
+    const opacity=content.hidden?'0':getComputedStyle(content).opacity;
+    animation?.cancel();
+    button.setAttribute('aria-expanded',String(open));
+    content.hidden=false;
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches){content.hidden=!open;return}
+    animation=content.animate([{height:`${height}px`,opacity},{height:`${open?content.scrollHeight:0}px`,opacity:open?1:0}],{duration:300,easing:'ease-out'});
+    animation.onfinish=()=>{content.hidden=!open;animation=undefined};
+  });
+});
+</script>
+<style>
+.education-list{padding:0 8px 0 16px;font:400 16px/24px "Geist Variable",sans-serif}
+.education-entry{position:relative;padding:16px 0}
+.education-entry::after{content:"";position:absolute;bottom:0;left:50%;width:200vw;transform:translateX(-50%);border-bottom:1px solid var(--rule);pointer-events:none}
+.institution{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.institution-dot{width:24px;height:24px;display:grid;place-items:center;flex-shrink:0}
+.institution-dot span{width:8px;height:8px;background:#52525b;border-radius:50%}
+:global(.light) .institution-dot span{background:#d4d4d8}
+.institution h3{font:500 18px/1.375 "Geist Variable",sans-serif;margin:0}
+.education-trigger{display:block;position:relative;width:100%;padding:0;text-align:left;border-radius:8px}
+.education-trigger::before{content:"";position:absolute;inset:-4px -4px -6px 28px;border-radius:8px;transition:background-color .15s ease-out}
+.education-trigger:hover::before{background:color-mix(in srgb,var(--panel) 65%,transparent)}
+.qualification{position:relative;display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.degree-icon{display:grid;place-items:center;flex-shrink:0;width:24px;height:24px;border-radius:8px;background:var(--panel);color:var(--muted);border:1px solid color-mix(in srgb,var(--muted) 15%,transparent);box-shadow:0 0 0 1px var(--bg),0 0 0 2px var(--rule)}
+.qualification h4{flex:1;min-width:0;margin:0;font:500 16px/24px "Geist Variable",sans-serif;text-wrap:balance}
+.qualification h4 span{font-weight:400;color:var(--muted)}
+.education-toggle{flex-shrink:0;color:var(--muted)}
+.collapse-icon{display:none}.education-trigger[aria-expanded=true] .expand-icon{display:none}.education-trigger[aria-expanded=true] .collapse-icon{display:block}
+.education-dates{position:relative;display:flex;gap:2px;padding-left:36px;font:400 14px/20px "Geist Variable",sans-serif;color:var(--muted)}
+.education-dates>span{font-family:PixelSquare,monospace}
+.education-content{overflow:hidden}.education-content[hidden]{display:none}
+.education-content p{margin:0;padding:8px 0 0 36px;font:400 14px/24px PixelSquare,monospace}
+</style>

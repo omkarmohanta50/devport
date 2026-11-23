@@ -4,6 +4,12 @@ export const profile = {
   email: 'omkarmohanta999@gmail.com',
   intro: 'I build deployment automation, tools for infrastructure teams, and AI agents.',
   work: 'At VegaStack, I work on how software gets released, how interrupted deployments recover, and how operators see what needs their attention.',
+  experienceHighlights: [
+    'Built and maintain an eight-node server cluster for Docker-based application hosting, with networking through a 16-port switch. Developed a CLI that deploys applications from a GitHub URL to a suitable cluster node.',
+    'Set up GitHub Actions pipelines, support Jenkins workflows, and automate release version updates and changelogs. Write Bash scripts for R&D applications deployed directly to servers.',
+    'Automate daily client database backups with cron and Amazon S3, including Slack notifications for successful and failed jobs.',
+    'Built an availability dashboard and monitor server health through AWS CloudWatch, Coolify, and internal dashboards, with AWS activity reviewed through CloudTrail.'
+  ],
   links: [
     ['LinkedIn', 'https://www.linkedin.com/in/omkarmohanta/'],
     ['Work GitHub', 'https://github.com/omkarmohanta09'],
