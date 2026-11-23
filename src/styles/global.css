@@ -147,3 +147,5 @@ main section:not(.identity)::before{
 .profile-preview.mail .preview-heading,.profile-preview.resume .preview-heading{display:none}
 @media(max-width:540px){.contact-wrap .profile-preview{left:0;bottom:auto;transform:translateY(5px)}.contact-wrap:hover .profile-preview,.contact-wrap:focus-within .profile-preview{transform:none}}
 .contact-wrap .profile-preview.linkedin{height:auto;font:14px/1.4 "Geist Variable",sans-serif;background:var(--panel);color:var(--fg);display:block}
+.profile-screenshot{display:block;width:100%;height:auto}
+.contact-wrap .profile-preview.linkedin{width:300px;border-radius:12px}
