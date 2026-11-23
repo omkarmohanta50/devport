@@ -120,3 +120,4 @@ main section:not(.identity)::before{position:relative;box-shadow:0 0 0 100vmax t
 .cover-grid{position:relative;border-bottom:1px solid var(--rule)}
 .gallery-intro{position:relative;padding:12px 16px}
 .gallery-intro::before{content:"";display:block;height:32px;position:relative;margin:-12px -16px 12px;border-bottom:1px solid var(--rule);background:repeating-linear-gradient(315deg,var(--rule) 0,var(--rule) 1px,transparent 1px,transparent 5px)}
+.collection-description{margin:0;padding:16px;font:14px/1.6 PixelSquare,monospace;color:var(--muted);text-wrap:pretty}
