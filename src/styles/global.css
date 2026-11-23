@@ -124,3 +124,5 @@ main section:not(.identity)::before{position:relative;box-shadow:0 0 0 100vmax t
 .profile-symbol{display:grid;place-items:center;width:28px;height:28px;top:-19px;left:-5px;padding:6px;border-radius:50%;color:var(--muted)}
 .profile-symbol:hover{color:var(--fg);background:var(--panel)}
 @media(max-width:540px){.profile-symbol{top:-19px}}
+.avatar .profile-avatar{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:8px}
+.avatar[aria-pressed=true] .profile-avatar{display:none}
