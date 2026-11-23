@@ -3,7 +3,9 @@ const {title='DevOps Engineer'}=Astro.props;
 import '@fontsource-variable/geist/index.css';
 import '../styles/global.css';
 import Footer from '../components/Footer.astro';
-import { Search, Moon, Sun, ChevronDown, X, House, Rss, Activity, Mail, Contrast, ArrowUp, CornerDownLeft, BookOpen, Heart, FileText, FolderCode } from '@lucide/astro';
+import HeaderMark from '../components/HeaderMark.astro';
+import CommandSearchIcon from '../components/CommandSearchIcon.astro';
+import { Search, Moon, Sun, ChevronDown, X, Rss, Activity, Mail, CornerDownLeft, FileText, Box, Layers, SunMedium, TextInitial } from '@lucide/astro';
 import { profile as p } from '../data/profile';
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 ---
@@ -25,23 +27,24 @@ if(location.hostname==='127.0.0.1' && location.port==='4322'){
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
-<header class="band"><nav class="column"><a class="logo" href="/" aria-label="Home">OM</a><a class="nav-link" href="/" aria-current={Astro.url.pathname==='/'?'page':undefined}>Home</a><a class="nav-link" href="/projects/" aria-current={Astro.url.pathname.startsWith('/projects')?'page':undefined}>Projects</a>
+<header class="band"><nav class="column"><a class="logo" href="/" aria-label="Home"><HeaderMark/></a><a class="nav-link" href="/" aria-current={Astro.url.pathname==='/'?'page':undefined}>Home</a><a class="nav-link" href="/projects/" aria-current={Astro.url.pathname.startsWith('/projects')?'page':undefined}>Projects</a>
 <div class="more"><button class="more-trigger" aria-expanded="false" aria-controls="more-links">More <ChevronDown size={12}/></button><div class="more-menu" id="more-links" hidden><div class="more-items"><a href="/blog/">Blogs</a><a href="/books/">Books</a><a href="/favourites/">Favourites</a></div></div></div>
 <button id="find" aria-label="Search this profile"><Search size={14}/><kbd>Ctrl</kbd><kbd>K</kbd></button><button id="theme" aria-label="Switch color theme"><Moon size={16} class="moon"/><Sun size={16} class="sun"/></button></nav></header>
 <main class="column" id="main"><slot/></main>
 <Footer/>
 <dialog id="palette" aria-label="Command Palette">
-<div class="command-input"><Search size={17}/><input id="query" type="text" role="combobox" aria-expanded="true" aria-controls="commands" aria-autocomplete="list" placeholder="Type a command or search..." autocomplete="off"/><button id="close-palette" aria-label="Close"><X size={16}/></button></div>
+<div class="command-input"><CommandSearchIcon/><input id="query" type="text" role="combobox" aria-expanded="true" aria-controls="commands" aria-autocomplete="list" aria-label="Search commands" placeholder="Type a command or search…" autocomplete="off" spellcheck="false"/><button id="close-palette" aria-label="Close"><X size={16}/></button></div>
 <div class="command-scroll" id="commands" role="listbox" aria-label="Suggestions">
 <div class="command-group" role="group" aria-label="Navigation"><p>Navigation</p>
-{[[House,'Home','/'],[FolderCode,'Projects','/projects/'],[Rss,'Blogs','/blog/'],[BookOpen,'Books','/books/'],[Heart,'Favourites','/favourites/'],[Activity,'Activity','/activity/'],[FileText,'Résumé','/resume.pdf'],[Mail,'Connect','/#connect']].map(row=>{const [Icon,label,url]=row as [typeof House,string,string];return <a role="option" aria-selected="false" href={url}><Icon size={16}/><span>{label}</span></a>})}</div>
+<a role="option" aria-selected="false" href="/"><HeaderMark/><span>Home</span></a>
+{[[Rss,'Blogs','/blog/'],[Box,'Projects','/projects/'],[Layers,'Books','/books/'],[FileText,'Favourites','/favourites/'],[Activity,'Activity','/activity/'],[FileText,'Résumé','/resume.pdf'],[Mail,'Connect','/#connect']].map(row=>{const [Icon,label,url]=row as [typeof Rss,string,string];return <a role="option" aria-selected="false" href={url}><Icon size={20}/><span>{label}</span></a>})}</div>
 <div class="command-group" role="group" aria-label="Feature"><p>Feature</p>
-<button role="option" aria-selected="false" data-action="theme"><Moon size={16}/><span>Toggle theme</span><kbd>D</kbd></button>
-<button role="option" aria-selected="false" data-action="avatar"><Contrast size={16}/><span>Toggle avatar</span><kbd>P</kbd></button>
-<button role="option" aria-selected="false" data-action="top"><ArrowUp size={16}/><span>Scroll to top</span><kbd>Shift ↑</kbd></button>
-<button role="option" aria-selected="false" data-action="close"><X size={16}/><span>Close command palette</span><kbd>Esc</kbd></button></div>
+<button role="option" aria-selected="false" data-action="theme"><SunMedium size={20}/><span>Toggle theme</span><span class="command-shortcut"><kbd>D</kbd></span></button>
+<button role="option" aria-selected="false" data-action="avatar"><TextInitial size={20}/><span>Toggle avatar</span><span class="command-shortcut"><kbd>P</kbd></span></button>
+<button role="option" aria-selected="false" data-action="top"><CornerDownLeft size={20}/><span>Scroll to top</span><span class="command-shortcut"><kbd>Shift</kbd><kbd>↑</kbd></span></button>
+<button role="option" aria-selected="false" data-action="close"><CommandSearchIcon/><span>Close command palette</span></button></div>
 <p class="no-results" hidden>No results found.</p></div>
-<div class="command-footer"><span class="command-monogram">OM</span><span>Go to Page <kbd><CornerDownLeft size={12}/></kbd></span><span>Exit <kbd>Esc</kbd></span></div>
+<div class="command-footer"><span class="command-monogram"><HeaderMark/></span><div class="command-hints"><span>Go to Page</span><kbd><CornerDownLeft size={12}/></kbd><span class="command-divider" aria-hidden="true"></span><span class="command-exit">Exit</span><kbd>Esc</kbd></div></div>
 </dialog>
 <script>
 const more=document.querySelector<HTMLElement>('.more')!;
@@ -59,6 +62,12 @@ more.addEventListener('keydown',e=>{
 });
 const palette=document.querySelector('dialog')!;
 const query=document.querySelector<HTMLInputElement>('#query')!;
+const commandScroll=palette.querySelector<HTMLElement>('.command-scroll')!;
+function updateCommandFade(){
+ commandScroll.style.setProperty('--fade-start',commandScroll.scrollTop>1?'transparent':'#000');
+ commandScroll.style.setProperty('--fade-end',commandScroll.scrollTop+commandScroll.clientHeight<commandScroll.scrollHeight-1?'transparent':'#000');
+}
+commandScroll.addEventListener('scroll',updateCommandFade,{passive:true});
 const options=Array.from(palette.querySelectorAll<HTMLElement>('[role="option"]'));
 const groups=Array.from(palette.querySelectorAll<HTMLElement>('.command-group'));
 let selected=0;
@@ -79,6 +88,7 @@ function filter(){
  groups.forEach(group=>group.hidden=!Array.from(group.querySelectorAll<HTMLElement>('[role="option"]')).some(option=>!option.hidden));
  palette.querySelector<HTMLElement>('.no-results')!.hidden=visibleOptions().length>0;
  select(0);
+ requestAnimationFrame(updateCommandFade);
 }
 function openSearch(){query.value='';palette.showModal();filter();query.focus()}
 options.forEach((option,index)=>{
