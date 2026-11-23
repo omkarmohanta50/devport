@@ -126,3 +126,15 @@ main section:not(.identity)::before{position:relative;box-shadow:0 0 0 100vmax t
 @media(max-width:540px){.profile-symbol{top:-19px}}
 .avatar .profile-avatar{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:8px}
 .avatar[aria-pressed=true] .profile-avatar{display:none}
+/* Reference separator: 24px band with a 10px diagonal tile across the viewport. */
+main section:not(.identity)::before{
+ position:relative;
+ left:50%;
+ width:100vw;
+ transform:translateX(-50%);
+ height:24px;
+ border-block:1px solid var(--rule);
+ background-image:repeating-linear-gradient(315deg,color-mix(in oklab,var(--rule) 55%,transparent) 0,color-mix(in oklab,var(--rule) 55%,transparent) 1px,transparent 0,transparent 50%);
+ background-size:10px 10px;
+ box-shadow:none;
+}
