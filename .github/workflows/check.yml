@@ -1,5 +1,15 @@
-name: Portfolio checks
-on: [push, pull_request]
+name: Check and deploy portfolio
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: portfolio-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,3 +23,14 @@ jobs:
       - run: npm run check
       - run: npm run build
       - run: npm run validate
+      - name: Deploy production to Cloudflare Pages
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: '0996cb6053454e8d51b5b48c25db9aa2'
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::error::Add CLOUDFLARE_API_TOKEN in repository Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          npx wrangler pages deploy dist --project-name shreeman-omkar --branch main
