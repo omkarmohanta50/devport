@@ -11,7 +11,7 @@ import {profile as p} from '../data/profile';
 <section class="identity">
 <button class="avatar" id="avatar" aria-pressed="false" aria-label="Toggle avatar"><span class="alternate"><Terminal size={52}/></span><svg viewBox="0 0 64 64"><rect width="64" height="64" fill="#e6e6de"/><text x="32" y="43" text-anchor="middle" font-family="PixelGrid" font-size="33" fill="#252927">OM</text></svg><span class="swap"><Contrast size={13}/></span></button>
 <span class="views"><Eye size={14}/><span id="count" title="Unique browsers" aria-label="Unique browsers">—</span></span>
-<div><h1>{p.name}</h1><p class="rotator"><span id="role">{p.role}</span></p><small>VegaStack (PeerXP)</small></div></section>
+<div class="identity-copy"><span class="profile-symbol" aria-hidden="true">◈</span><h1>{p.name}</h1><p class="rotator"><span id="role">{p.role}</span></p><small>VegaStack (PeerXP)</small></div></section>
 <section><h2>About</h2><ul class="about">
 <li>I'm a DevOps engineer at VegaStack. I work across cloud infrastructure, deployment automation, and the tools people use to operate services.</li>
 <li>I provision infrastructure with Terraform and CloudFormation, work with AWS services including EC2, S3, IAM, VPC, Lambda, DynamoDB, and CloudWatch, and run containerized applications with Docker and Kubernetes.</li>

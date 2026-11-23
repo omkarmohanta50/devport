@@ -1,9 +1,10 @@
 ---
 import {createElement} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
-import {FaGithub,FaLinkedin,FaEnvelope} from 'react-icons/fa';
+import {FaGithub,FaLinkedin,FaEnvelope,FaFileAlt} from 'react-icons/fa';
 import {profile as p} from '../data/profile';
 const contacts=[
+ {name:'Résumé',url:'/resume.pdf',icon:FaFileAlt,handle:'Original résumé from Drive',description:'Omkar Mohanta · DevOps Engineer',meta:'PDF',kind:'resume'},
  {name:'Work GitHub',url:p.links[1][1],icon:FaGithub,handle:'@omkarmohanta09',description:'Deployment automation, release recovery, and tools for infrastructure teams.',meta:'VegaStack · Work contributions',kind:'github'},
  {name:'Personal GitHub',url:p.links[2][1],icon:FaGithub,handle:'@omkarmohanta50',description:'Cloud infrastructure, containers, automation, and application development.',meta:'Personal GitHub profile',kind:'github'},
  {name:'LinkedIn',url:p.links[0][1],icon:FaLinkedin,handle:'DevOps Engineer',description:'VegaStack (PeerXP)',meta:'Cloud infrastructure · Release engineering · AI agents',kind:'linkedin'},

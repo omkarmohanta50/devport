@@ -1,5 +1,9 @@
 ---
 import Shell from '../layouts/Shell.astro';
-import {Heart} from '@lucide/astro';
+const groups=[
+ ['Movies',['The Shawshank Redemption']],
+ ['Series',['Dark','Breaking Bad','Stranger Things']],
+ ['Anime',['Vinland Saga']]
+];
 ---
-<Shell title="Favourites"><section class="collection"><h2>Favourites</h2><div class="empty-collection"><Heart size={26}/><p>No favourites added yet.</p></div></section></Shell>
+<Shell title="Favourites"><section class="collection"><h2>Favourites</h2><div class="favourites-list">{groups.map(([category,titles])=><section><h3>{category}</h3><ul>{(titles as string[]).map(title=><li>{title}</li>)}</ul></section>)}</div></section></Shell>
