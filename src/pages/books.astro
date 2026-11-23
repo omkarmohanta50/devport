@@ -1,11 +1,15 @@
 ---
 import Shell from '../layouts/Shell.astro';
 import Cover from '../components/Cover.astro';
-import {BookOpen} from '@lucide/astro';
+import {BookOpen, BookCheck, BookPlus} from '@lucide/astro';
 const books=[
  ['The Monk Who Sold His Ferrari','Robin Sharma','monk'],
  ['Who Will Cry When You Die?','Robin Sharma','cry'],
  ['The Power of Your Subconscious Mind','Joseph Murphy','mind']
 ];
 ---
-<Shell title="Books"><div class="gallery-intro"><h1>Books</h1></div><p class="collection-description">A few books on finding purpose, understanding the mind, and making room for what matters. This is my personal shelf, away from the terminal.</p><section class="media-section"><h2><BookOpen size={18}/>Books</h2><div class="cover-grid">{books.map(([title,author,image])=><Cover title={title} subtitle={author} image={'/images/'+image+'.jpg'}/>)}</div></section></Shell>
+<Shell title="Books"><div class="gallery-intro"><h1>Books</h1></div><p class="collection-description">A few books on finding purpose, understanding the mind, and making room for what matters. This is my personal shelf, away from the terminal.</p>
+<section class="media-section"><h2><BookOpen size={16}/>Reading</h2><div class="cover-grid"><Cover title="Think Straight" subtitle="Darius Foroux" image="/images/think-straight.jpg"/></div></section>
+<section class="media-section"><h2><BookCheck size={16}/>Read</h2><div class="cover-grid">{books.map(([title,author,image])=><Cover title={title} subtitle={author} image={'/images/'+image+'.jpg'}/>)}</div></section>
+<section class="media-section"><h2><BookPlus size={16}/>To Read</h2><div class="cover-grid" aria-label="No books added to this shelf yet"></div></section>
+</Shell>
