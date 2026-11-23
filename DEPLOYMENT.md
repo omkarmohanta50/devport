@@ -34,3 +34,13 @@ Source changes must be committed and pushed to main to trigger publication. CI u
 ## Optional manual fallback
 
 With Wrangler logged in locally, npm run deploy runs checks, builds and publishes the site. Normal publishing uses GitHub Actions.
+
+## Branches and weekly refresh
+
+Use feature branches for changes and open pull requests into develop. After review, release develop through a pull request into main. Checks run on pushes and PRs for both branches. Only main builds deploy production.
+
+Once this workflow is merged to the default branch main, the weekly schedule runs on Mondays at 03:17 UTC (08:47 India time). GitHub can delay a scheduled run and can disable schedules after repository inactivity. The Run workflow option can refresh any selected branch on demand for testing. Publication still requires main.
+
+Each production build fetches both public profiles, avatar pictures, the current-year Work and Personal calendars, and recent work-account merged activity. A failed fetch or validation stops the build and deployment, retaining the previous production site. Refreshes are generated inside the build and do not push automated commits to main. X and LinkedIn screenshot previews remain manually maintained.
+
+The refresh uses the standard Ubuntu runner in this public repository and the existing Cloudflare deployment. It adds no paid service.
