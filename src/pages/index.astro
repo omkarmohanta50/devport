@@ -9,9 +9,9 @@ import {profile as p} from '../data/profile';
 <Shell>
 <div class="banner" aria-hidden="true"></div>
 <section class="identity">
-<button class="avatar" id="avatar" aria-pressed="false" aria-label="Toggle avatar"><span class="alternate"><Terminal size={52}/></span><svg viewBox="0 0 64 64"><rect width="64" height="64" fill="#e6e6de"/><text x="32" y="43" text-anchor="middle" font-family="PixelGrid" font-size="33" fill="#252927">OM</text></svg><span class="swap"><Contrast size={13}/></span></button>
+<button class="avatar" id="avatar" aria-pressed="false" aria-label="Toggle avatar"><span class="alternate"><Terminal size={52}/></span><svg viewBox="0 0 64 64"><rect width="64" height="64" fill="#e6e6de"/><text x="32" y="43" text-anchor="middle" font-family="PixelGrid" font-size="33" fill="#252927">OM</text></svg></button>
 <span class="views"><Eye size={14}/><span id="count" title="Unique browsers" aria-label="Unique browsers">—</span></span>
-<div class="identity-copy"><span class="profile-symbol" aria-hidden="true">◈</span><h1>{p.name}</h1><p class="rotator"><span id="role">{p.role}</span></p><small>VegaStack (PeerXP)</small></div></section>
+<div class="identity-copy"><button class="profile-symbol" id="avatar-switch" aria-label="Toggle avatar" title="Toggle avatar" aria-pressed="false"><Contrast size={14}/></button><h1>{p.name}</h1><p class="rotator"><span id="role">{p.role}</span></p><small>VegaStack (PeerXP)</small></div></section>
 <section><h2>About</h2><ul class="about">
 <li>I'm a DevOps engineer at VegaStack. I work across cloud infrastructure, deployment automation, and the tools people use to operate services.</li>
 <li>I provision infrastructure with Terraform and CloudFormation, work with AWS services including EC2, S3, IAM, VPC, Lambda, DynamoDB, and CloudWatch, and run containerized applications with Docker and Kubernetes.</li>
@@ -31,7 +31,10 @@ import {profile as p} from '../data/profile';
 <section id="credentials"><h2>Credentials</h2>{p.background.slice(2).map(([title,,issuer,date])=><div class="entry"><Award size={18}/><div><h3>{title}</h3><p>{issuer}</p></div><small>{date}</small></div>)}</section><script>
 const avatar=document.querySelector<HTMLButtonElement>('#avatar')!;
 avatar.setAttribute('aria-pressed',String(localStorage.getItem('avatar')==='alternate'));
-avatar.onclick=()=>{const active=avatar.getAttribute('aria-pressed')!=='true';avatar.setAttribute('aria-pressed',String(active));localStorage.setItem('avatar',active?'alternate':'initials')};
+const switcher=document.querySelector<HTMLButtonElement>('#avatar-switch')!;
+switcher.setAttribute('aria-pressed',avatar.getAttribute('aria-pressed')!);
+switcher.onclick=()=>avatar.click();
+avatar.onclick=()=>{const active=avatar.getAttribute('aria-pressed')!=='true';avatar.setAttribute('aria-pressed',String(active));localStorage.setItem('avatar',active?'alternate':'initials');switcher.setAttribute('aria-pressed',String(active))};
 const role=document.querySelector<HTMLElement>('#role')!;
 const titles=['DevOps Engineer','Building AI agents','Platform engineering'];
 let current=0;
