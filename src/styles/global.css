@@ -68,3 +68,4 @@ h1,h2,.logo{font-family:PixelGrid,monospace;letter-spacing:normal;font-size:30px
 .command-footer>span{display:flex;align-items:center;gap:7px}.command-monogram{margin-right:auto;font:13px PixelGrid;color:var(--muted)}
 .command-footer kbd{display:inline-flex;align-items:center;padding:2px 4px;background:var(--panel);border:1px solid var(--rule);border-radius:3px}
 .no-results{text-align:center;padding:25px;color:var(--muted)}
+.collection{min-height:55vh}.empty-collection{padding:56px 20px;color:var(--muted);text-align:center}.empty-collection svg{margin:auto}.empty-collection p{font-family:PixelSquare,monospace}

@@ -1,0 +1,5 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import posts from '../../data/medium.json';
+---
+<Shell title="Blog"><div class="journal"><aside><a href="/blog/" aria-current="page">All posts</a><a href="https://medium.com/@omkarmohanta">Medium profile</a></aside><article><h1>Blog</h1>{posts.map(post=><a class="post" href={post.url}><small><time datetime={post.date}>{new Date(post.date+'T00:00:00Z').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'})}</time> · Medium</small><h3>{post.title}</h3><span>Read on Medium</span></a>)}</article></div></Shell>
