@@ -1,9 +1,11 @@
 ---
 import Shell from '../layouts/Shell.astro';
+import Cover from '../components/Cover.astro';
+import {Film, Tv, Sparkles} from '@lucide/astro';
 const groups=[
- ['Movies',['The Shawshank Redemption']],
- ['Series',['Dark','Breaking Bad','Stranger Things']],
- ['Anime',['Vinland Saga']]
+ {title:'Movies',icon:Film,items:[['The Shawshank Redemption','shawshank']]},
+ {title:'Series',icon:Tv,items:[['Dark','dark'],['Breaking Bad','breaking-bad'],['Stranger Things','stranger-things']]},
+ {title:'Anime',icon:Sparkles,items:[['Vinland Saga','vinland-saga']]}
 ];
 ---
-<Shell title="Favourites"><section class="collection"><h2>Favourites</h2><div class="favourites-list">{groups.map(([category,titles])=><section><h3>{category}</h3><ul>{(titles as string[]).map(title=><li>{title}</li>)}</ul></section>)}</div></section></Shell>
+<Shell title="Favourites"><div class="gallery-intro"><h1>Favourites</h1></div>{groups.map(({title,icon:Icon,items})=><section class="media-section"><h2><Icon size={18}/>{title}</h2><div class="cover-grid">{items.map(([name,image])=><Cover title={name} image={'/images/'+image+'.jpg'}/>)}</div></section>)}</Shell>

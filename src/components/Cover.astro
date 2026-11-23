@@ -1,0 +1,5 @@
+---
+interface Props {title:string; subtitle?:string; image:string}
+const {title,subtitle,image}=Astro.props;
+---
+<figure class="cover-cell"><div class="cover-card" tabindex="0" aria-label={subtitle?title+' by '+subtitle:title}><img src={image} alt={title} width="400" height="600" loading="lazy"/><figcaption><strong>{title}</strong>{subtitle&&<span>{subtitle}</span>}</figcaption></div></figure>

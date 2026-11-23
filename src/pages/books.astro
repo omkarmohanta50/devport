@@ -1,9 +1,11 @@
 ---
 import Shell from '../layouts/Shell.astro';
+import Cover from '../components/Cover.astro';
+import {BookOpen} from '@lucide/astro';
 const books=[
- ['The Monk Who Sold His Ferrari','Robin Sharma'],
- ['Who Will Cry When You Die?','Robin Sharma'],
- ['The Power of Your Subconscious Mind','Joseph Murphy']
+ ['The Monk Who Sold His Ferrari','Robin Sharma','monk'],
+ ['Who Will Cry When You Die?','Robin Sharma','cry'],
+ ['The Power of Your Subconscious Mind','Joseph Murphy','mind']
 ];
 ---
-<Shell title="Books"><section class="collection"><h2>Books</h2><div class="book-list">{books.map(([title,author],i)=><article class="book-row"><div class={'book-spine book-'+i} aria-hidden="true"><span>{title}</span></div><div><h3>{title}</h3><p>{author}</p></div></article>)}</div></section></Shell>
+<Shell title="Books"><div class="gallery-intro"><h1>Books</h1></div><section class="media-section"><h2><BookOpen size={18}/>Books</h2><div class="cover-grid">{books.map(([title,author,image])=><Cover title={title} subtitle={author} image={'/images/'+image+'.jpg'}/>)}</div></section></Shell>
