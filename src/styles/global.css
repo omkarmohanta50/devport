@@ -150,3 +150,11 @@ main section:not(.identity)::before{
 .profile-screenshot{display:block;width:100%;height:auto}
 .contact-wrap .profile-preview.linkedin{width:300px;border-radius:12px}
 .contact-wrap .profile-preview.twitter{width:300px;border-radius:12px}
+.github-map [hidden]{display:none}.calendar-controls{display:flex;align-items:center;padding:0 0 8px}.account-switch{display:flex;gap:2px;padding:3px;border:1px solid var(--rule);border-radius:20px;background:var(--panel);font:12px PixelSquare,monospace}.account-choice{padding:5px 10px;border-radius:15px;color:var(--muted)}.account-choice.active{background:var(--bg);color:var(--fg);box-shadow:0 1px 4px #0003}.calendar-account{display:block;text-align:right;font-size:12px;color:var(--muted);margin-bottom:10px}
+.more .more-trigger{display:flex;align-items:center;gap:4px;padding:0;font:inherit;color:var(--muted)}.more-trigger[aria-expanded=true]{color:var(--fg)}.more-trigger[aria-expanded=true] svg{transform:rotate(180deg)}.more-trigger svg{transition:transform .2s}
+.more .more-menu{position:absolute;top:100%;left:0;right:auto;width:max-content;padding:22px 0 0;background:transparent;border:0;border-radius:0;z-index:50}
+.more .more-items{position:static;width:auto;padding:4px;border:1px solid var(--rule);border-radius:12px;background:var(--panel);box-shadow:0 1px 6px #0003}
+.more .more-items a{padding:6px 12px;border-radius:6px;font:14px/1.5 PixelSquare,monospace;white-space:nowrap;color:var(--muted)}
+.more .more-items a:hover,.more .more-items a:focus-visible{background:var(--rule);color:var(--fg);text-decoration:none}
+.more-menu[hidden]{display:none}
+@media(prefers-reduced-motion:reduce){.more-trigger svg{transition:none}}

@@ -3,4 +3,4 @@ import Shell from '../layouts/Shell.astro';
 import Activity from '../components/Activity.astro';
 import days from '../data/activity.json';
 ---
-<Shell title="Activity"><section><h2>GitHub Activity</h2><Activity/><div class="entry-detail"><a href="https://github.com/pulls?q=is%3Apr+is%3Amerged+author%3Aomkarmohanta09+org%3Avegastack">View public contributions on GitHub</a></div>{days.map(d=><div class="entry"><time>{d.day}</time><small>{d.Count} merged {d.Count===1?'pull request':'pull requests'}</small></div>)}</section></Shell>
+<Shell title="Activity"><section><h2>GitHub Activity</h2><Activity/><div data-work-activity><div class="entry-detail"><a href="https://github.com/pulls?q=is%3Apr+is%3Amerged+author%3Aomkarmohanta09+org%3Avegastack">View public contributions on GitHub</a></div>{days.map(d=><div class="entry"><time>{d.day}</time><small>{d.Count} merged {d.Count===1?'pull request':'pull requests'}</small></div>)}</div></section></Shell>

@@ -2,12 +2,37 @@
 import {createElement, cloneElement} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {ActivityCalendar} from 'react-activity-calendar';
-import data from '../data/contributions.json';
-const html=renderToStaticMarkup(createElement(ActivityCalendar,{
-  data,blockSize:10,blockMargin:3,blockRadius:2,fontSize:10,
-  showWeekdayLabels:['mon','wed','fri'],colorScheme:'dark',
-  labels:{totalCount:'{{count}} contributions in {{year}}'},
-  renderBlock:(block,activity)=>cloneElement(block,{},createElement('title',null,activity.date+' · '+activity.count+' contributions')),
-}));
+import work from '../data/contributions.json';
+import personal from '../data/personal-contributions.json';
+const accounts=[
+ {key:'work',label:'Work',login:'omkarmohanta09',data:work},
+ {key:'personal',label:'Personal',login:'omkarmohanta50',data:personal}
+];
+function calendar(data:typeof work){
+ return renderToStaticMarkup(createElement(ActivityCalendar,{
+ data,blockSize:10,blockMargin:3,blockRadius:2,fontSize:10,
+ showWeekdayLabels:['mon','wed','fri'],colorScheme:'dark',
+ labels:{totalCount:'{{count}} contributions in {{year}}'},
+ renderBlock:(block,activity)=>cloneElement(block,{},createElement('title',null,activity.date+' · '+activity.count+' contributions'))
+ }));
+}
 ---
-<div class="github-map"><a href="https://github.com/omkarmohanta09">@omkarmohanta09</a><div class="map-scroll" set:html={html}></div></div>
+<div class="github-map" data-github-switch>
+<div class="calendar-controls"><button class="account-switch" type="button" role="switch" aria-checked="false" aria-label="Show Personal GitHub activity"><span class="account-choice active">Work</span><span class="account-choice">Personal</span></button></div>
+{accounts.map(account=><div data-account={account.key} hidden={account.key==='personal'}><a class="calendar-account" href={'https://github.com/'+account.login}>{account.label} · @{account.login}</a><div class="map-scroll" set:html={calendar(account.data)}></div></div>)}
+</div>
+<script>
+document.querySelectorAll<HTMLElement>('[data-github-switch]').forEach(root=>{
+ const button=root.querySelector<HTMLButtonElement>('button')!;
+ let personal=localStorage.getItem('github-account')==='personal';
+ function update(){
+  button.setAttribute('aria-checked',String(personal));
+  button.setAttribute('aria-label',personal?'Show Work GitHub activity':'Show Personal GitHub activity');
+  root.querySelectorAll<HTMLElement>('[data-account]').forEach(panel=>panel.hidden=(panel.dataset.account==='personal')!==personal);
+  root.querySelectorAll('.account-choice').forEach((choice,index)=>choice.classList.toggle('active',index===(personal?1:0)));
+  document.querySelectorAll<HTMLElement>('[data-work-activity]').forEach(panel=>panel.hidden=personal);
+ }
+ button.addEventListener('click',()=>{personal=!personal;localStorage.setItem('github-account',personal?'personal':'work');update()});
+ update();
+});
+</script>

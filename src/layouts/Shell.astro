@@ -22,7 +22,7 @@ if(location.hostname==='127.0.0.1' && location.port==='4322'){
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
 <header class="band"><nav class="column"><a class="logo" href="/" aria-label="Home">OM</a><a href="/">Home</a><a href="/#experience">Experience</a>
-<details class="more"><summary>More <ChevronDown size={12}/></summary><div><a href="/blog/">Blog</a><a href="/books/">Books</a><a href="/favourites/">Favourites</a></div></details>
+<div class="more"><button class="more-trigger" aria-expanded="false" aria-controls="more-links">More <ChevronDown size={12}/></button><div class="more-menu" id="more-links" hidden><div class="more-items"><a href="/blog/">Blogs</a><a href="/books/">Books</a><a href="/favourites/">Favourites</a></div></div></div>
 <button id="find" aria-label="Search this profile"><Search size={14}/><kbd>Ctrl</kbd><kbd>K</kbd></button><button id="theme" aria-label="Switch color theme"><Moon size={16} class="moon"/><Sun size={16} class="sun"/></button></nav></header>
 <main class="column" id="main"><slot/></main>
 <footer class="column">Omkar Mohanta</footer>
@@ -40,6 +40,19 @@ if(location.hostname==='127.0.0.1' && location.port==='4322'){
 <div class="command-footer"><span class="command-monogram">OM</span><span>Go to Page <kbd><CornerDownLeft size={12}/></kbd></span><span>Exit <kbd>Esc</kbd></span></div>
 </dialog>
 <script>
+const more=document.querySelector<HTMLElement>('.more')!;
+const trigger=more.querySelector<HTMLButtonElement>('.more-trigger')!;
+const menu=more.querySelector<HTMLElement>('.more-menu')!;
+function showMore(open:boolean){menu.hidden=!open;trigger.setAttribute('aria-expanded',String(open))}
+more.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')showMore(true)});
+more.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')showMore(false)});
+trigger.addEventListener('click',()=>showMore(menu.hasAttribute('hidden')));
+more.addEventListener('focusout',e=>{if(!more.contains(e.relatedTarget as Node))showMore(false)});
+document.addEventListener('pointerdown',e=>{if(!more.contains(e.target as Node))showMore(false)});
+more.addEventListener('keydown',e=>{
+ if(e.key==='Escape'){showMore(false);trigger.focus()}
+ if(e.key==='ArrowDown'&&e.target===trigger){e.preventDefault();showMore(true);menu.querySelector('a')?.focus()}
+});
 const palette=document.querySelector('dialog')!;
 const query=document.querySelector<HTMLInputElement>('#query')!;
 const options=Array.from(palette.querySelectorAll<HTMLElement>('[role="option"]'));
@@ -100,3 +113,4 @@ document.querySelector('#theme')?.addEventListener('click',event=>{
   transition.ready.then(()=>root.animate({clipPath:['circle(0 at '+x+'px '+y+'px)','circle('+Math.hypot(innerWidth,innerHeight)+'px at '+x+'px '+y+'px)']},{duration:420,pseudoElement:'::view-transition-new(root)',easing:'ease-out'}));
 });
 </script></body></html>
+
