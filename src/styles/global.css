@@ -1,5 +1,5 @@
 *{box-sizing:border-box}
-:root{color-scheme:dark;--bg:#090909;--fg:#eaeaea;--muted:#aaa;--rule:#272727;--panel:#171717}
+:root{color-scheme:dark;--bg:#060607;--fg:#eaeaea;--muted:#aaa;--rule:#272727;--panel:#171717}
 :root.light{color-scheme:light;--bg:#fafafa;--fg:#191919;--muted:#555;--rule:#d5d5d5;--panel:#eee}
 body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/1.5 "Geist Variable",Arial,sans-serif}
 .column{width:min(768px,100%);margin:auto;border-inline:1px solid var(--rule)}
